@@ -35,12 +35,11 @@ class TicTacToeGame {
 
   placePiece(spot, currentPlayer) {
     this.plays[spot] = currentPlayer;
-    if (this.checkHorizontal() || this.checkVertical()) {
+
+    if (this.checkAll()) {
       this.displayMessage();
     }
-    this.checkVertical();
-    this.checkHorizontal();
-    // this.checkAll();
+    this.checkDiagonals();
   }
 
   changeCurrentPlayer() {
@@ -57,7 +56,6 @@ class TicTacToeGame {
     if (this.turns === 8) {
       this.turns++;
       document.getElementsByClassName('plays')[0].innerHTML = this.turns
-      // this.displayMessage();
     } else {
       this.turns++;
       document.getElementsByClassName('plays')[0].innerHTML = this.turns
@@ -74,7 +72,7 @@ class TicTacToeGame {
       });
 
       if (allEqual && !arrOfInputs.includes(null)) {
-        console.log(arrOfInputs);
+        // console.log(arrOfInputs);
         console.log('WIN VERTICAL')
         return true;
       }
@@ -91,7 +89,7 @@ class TicTacToeGame {
       });
 
       if (allEqual && !arrOfInputs.includes(null)) {
-        console.log(arrOfInputs);
+        // console.log(arrOfInputs);
         console.log('WIN HORIZONTAL')
         return true;
       }
@@ -99,14 +97,42 @@ class TicTacToeGame {
   }
 
   checkDiagonals() {
+    const leftDown = [];
+    leftDown.push(this.plays[0], this.plays[4], this.plays[8]);
+    const rightDown = [];
+    rightDown.push(this.plays[2], this.plays[4], this.plays[6]);
+
+    const leftEqual = leftDown.every((v) => {
+      return v === leftDown[0]
+    });
+
+    if (leftEqual && !leftDown.includes(null)) {
+
+      console.log('WIN LEFT DOWN');
+      return true;
+    }
+
+    const rightEqual = rightDown.every((v) => {
+      return v === rightDown[0]
+    });
+
+    if (rightEqual && !rightDown.includes(null)) {
+
+      console.log('WIN RIGHT DOWN');
+      return true;
+    }
 
   }
 
-  // checkAll() {
-  //   return this.checkVertical() || this.checkHorizontal();
-  // }
+  checkAll() {
+    return this.checkVertical() || this.checkHorizontal();
+  }
 
   displayMessage() {
+    console.log('GAME OVER');
+  }
+
+  removeListeners() {
     let cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
       cells[i].removeEventListener('click');
