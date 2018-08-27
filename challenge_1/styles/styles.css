@@ -1,0 +1,18 @@
+.grid {
+  display: flex;                  
+  flex-wrap: wrap;                 
+  /* justify-content: space-around; */
+}
+
+.cell {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  flex: 0 0 32%;
+  height: 80px;
+  width: 200px;
+  background-color: lightblue;
+}
+
+
+
