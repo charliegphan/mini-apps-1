@@ -1,8 +1,14 @@
+class TicTacToeView { }
+class TicTacToeController { }
+class TicTacToeModel { }
+
 class TicTacToeGame {
   constructor() {
     this.currentPlayer = undefined;
     this.turns = 0;
     this.plays = [];
+    this.X = 0;
+    this.O = 0;
     this.lastWinner = undefined;
   }
 
@@ -85,6 +91,11 @@ class TicTacToeGame {
     document.getElementsByClassName('plays')[0].innerHTML = ++this.turns
   }
 
+  setScore(winner) {
+    this[winner]++;
+    document.getElementsByClassName(this.lastWinner)[0].innerHTML = this[winner];
+  }
+
   checkVertical() {
     for (let i = 0; i < 3; i++) {
       const arrOfInputs = [];
@@ -96,6 +107,7 @@ class TicTacToeGame {
 
       if (allEqual && !arrOfInputs.includes(null)) {
         this.lastWinner = arrOfInputs[0]
+        this.setScore(this.lastWinner);
         console.log('WIN VERTICAL')
         return true;
       }
@@ -113,6 +125,7 @@ class TicTacToeGame {
 
       if (allEqual && !arrOfInputs.includes(null)) {
         this.lastWinner = arrOfInputs[0]
+        this.setScore(this.lastWinner);
         console.log('WIN HORIZONTAL')
         return true;
       }
@@ -133,6 +146,7 @@ class TicTacToeGame {
 
     if (leftEqual && !leftDown.includes(null)) {
       this.lastWinner = leftDown[0]
+      this.setScore(this.lastWinner);
       console.log('WIN LEFT DOWN');
       return true;
     }
@@ -142,11 +156,14 @@ class TicTacToeGame {
     const rightDown = [];
     rightDown.push(this.plays[2], this.plays[4], this.plays[6]);
     const rightEqual = rightDown.every((v) => {
-      this.lastWinner = rightDown[0]
       return v === rightDown[0]
     });
 
     if (rightEqual && !rightDown.includes(null)) {
+      this.lastWinner = rightDown[0]
+      this.setScore(this.lastWinner);
+      // this[this.lastWinner]++;
+      // document.getElementsByClassName(this.lastWinner)[0].innerHTML = this[this.lastWinner];
       console.log('WIN RIGHT DOWN');
       return true;
     }
