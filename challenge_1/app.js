@@ -42,7 +42,6 @@ class TicTacToeGame {
 
     reset.addEventListener('click', (e) => {
       this.init(this.lastWinner);
-      console.log('hit');
     })
   }
 
