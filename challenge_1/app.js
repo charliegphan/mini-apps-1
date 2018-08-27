@@ -7,16 +7,38 @@ class TicTacToeGame {
 
   init() {
     console.log('GAME START');
+    this.populatePlays();
+    this.addListeners();
+    this.clearBoard();
+    this.resetGameInfo();
+  }
+
+  clearBoard() {
+    let cells = document.getElementsByClassName("cell");
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].innerHTML = '';
+    }
+  }
+
+  resetGameInfo() {
+    this.turns = 0;
+    document.getElementsByClassName('plays')[0].innerHTML = '0';
+    this.currentPlayer = 'X';
+    document.getElementsByClassName('turn')[0].innerHTML = 'X'
+    this.populatePlays();
+  }
+
+  addListeners() {
     let cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
       cells[i].addEventListener('click', (e) => {
         this.markCell(i);
       })
     }
-
-    for (let i = 0; i < 9; i++) {
-      this.plays.push(null);
-    }
+    let reset = document.getElementsByClassName("reset")[0];
+    reset.addEventListener('click', (e) => {
+      this.init();
+    })
   }
 
   markCell(spot) {
@@ -43,13 +65,8 @@ class TicTacToeGame {
   }
 
   changeCurrentPlayer() {
-    if (this.currentPlayer === 'X') {
-      this.currentPlayer = 'O';
-      document.getElementsByClassName('turn')[0].innerHTML = this.currentPlayer
-    } else {
-      this.currentPlayer = 'X';
-      document.getElementsByClassName('turn')[0].innerHTML = this.currentPlayer
-    }
+    document.getElementsByClassName('turn')[0].innerHTML = this.currentPlayer === 'X' ? 'O' : 'X'
+    this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X'
   }
 
   checkAndIncrementTurns() {
@@ -140,8 +157,10 @@ class TicTacToeGame {
     console.log('GAME OVER');
   }
 
-  resetGame() {
-
+  populatePlays() {
+    for (let i = 0; i < 9; i++) {
+      this.plays.push(null);
+    }
   }
 }
 
