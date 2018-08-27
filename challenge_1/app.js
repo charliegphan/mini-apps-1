@@ -70,13 +70,15 @@ class TicTacToeGame {
   }
 
   checkAndIncrementTurns() {
-    if (this.turns === 8) {
-      this.turns++;
-      document.getElementsByClassName('plays')[0].innerHTML = this.turns
-    } else {
-      this.turns++;
-      document.getElementsByClassName('plays')[0].innerHTML = this.turns
-    }
+    // if (this.turns === 8) {
+    //   this.turns++;
+    //   document.getElementsByClassName('plays')[0].innerHTML = this.turns
+    // } else {
+    //   this.turns++;
+    //   document.getElementsByClassName('plays')[0].innerHTML = this.turns
+    // }
+
+    document.getElementsByClassName('plays')[0].innerHTML = ++this.turns
   }
 
   checkVertical() {
