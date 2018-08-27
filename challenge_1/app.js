@@ -20,9 +20,11 @@ class TicTacToeGame {
 
   markCell(spot) {
     let cell = document.getElementsByClassName(spot.toString())[0];
+
     if (cell.innerHTML === 'X' || cell.innerHTML === 'O') {
       return;
     }
+
     cell.innerHTML = this.currentPlayer;
     this.placePiece(spot, this.currentPlayer);
     this.changeCurrentPlayer();
@@ -32,7 +34,9 @@ class TicTacToeGame {
 
   placePiece(spot, currentPlayer) {
     this.plays[spot] = currentPlayer;
-    console.log(this.plays);
+    this.checkVertical();
+    this.checkHorizontal();
+    // this.checkAll();
   }
 
   changeCurrentPlayer() {
@@ -57,24 +61,55 @@ class TicTacToeGame {
   }
 
   checkVertical() {
-    for (let i = 0; i < 3; i++) {
+    // for (let i = 0; i < 3; i = i++) {
+    //   const arrOfInputs = [];
+    //   arrOfInputs.push(this.plays[i], this.plays[i + 3], this.plays[i + 6]);
 
-    }
+    //   const allEqual = arrOfInputs.every((v) => {
+    //     return v === arrOfInputs[0]
+    //   });
+
+    //   if (allEqual && !arrOfInputs.includes(null)) {
+    //     console.log(arrOfInputs);
+    //     console.log('WIN VERTICAL')
+    //     return true;
+    //   }
+    // }
   }
 
   checkHorizontal() {
+    // for (let i = 0; i < 9; i = i + 3) {
+    //   const arrOfInputs = [];
+    //   arrOfInputs.push(this.plays[i], this.plays[i + 1], this.plays[i + 2]);
 
+    //   const allEqual = arrOfInputs.every((v) => {
+    //     return v === arrOfInputs[0]
+    //   });
+
+    //   if (allEqual && !arrOfInputs.includes(null)) {
+    //     console.log(arrOfInputs);
+    //     console.log('WIN HORIZONTAL')
+    //     return true;
+    //   }
+    // }
   }
 
   checkDiagonals() {
 
   }
 
-  checkAll() {
-    return this.checkVertical && this.checkHorizontal && this.checkDiagonals;
-  }
+  // checkAll() {
+  //   return this.checkVertical() || this.checkHorizontal();
+  // }
 
   displayMessage() {
+    // let cells = document.getElementsByClassName("cell");
+    // for (let i = 0; i < cells.length; i++) {
+    //   cells[i].removeEventListener('click');
+    // }
+  }
+
+  resetGame() {
 
   }
 }
