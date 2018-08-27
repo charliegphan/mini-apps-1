@@ -6,6 +6,7 @@ class TicTacToeGame {
   }
 
   init() {
+    console.log('GAME START');
     let cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
       cells[i].addEventListener('click', (e) => {
@@ -34,6 +35,9 @@ class TicTacToeGame {
 
   placePiece(spot, currentPlayer) {
     this.plays[spot] = currentPlayer;
+    if (this.checkHorizontal() || this.checkVertical()) {
+      this.displayMessage();
+    }
     this.checkVertical();
     this.checkHorizontal();
     // this.checkAll();
@@ -53,7 +57,7 @@ class TicTacToeGame {
     if (this.turns === 8) {
       this.turns++;
       document.getElementsByClassName('plays')[0].innerHTML = this.turns
-      this.displayMessage();
+      // this.displayMessage();
     } else {
       this.turns++;
       document.getElementsByClassName('plays')[0].innerHTML = this.turns
@@ -61,37 +65,37 @@ class TicTacToeGame {
   }
 
   checkVertical() {
-    // for (let i = 0; i < 3; i = i++) {
-    //   const arrOfInputs = [];
-    //   arrOfInputs.push(this.plays[i], this.plays[i + 3], this.plays[i + 6]);
+    for (let i = 0; i < 3; i++) {
+      const arrOfInputs = [];
+      arrOfInputs.push(this.plays[i], this.plays[i + 3], this.plays[i + 6]);
 
-    //   const allEqual = arrOfInputs.every((v) => {
-    //     return v === arrOfInputs[0]
-    //   });
+      const allEqual = arrOfInputs.every((v) => {
+        return v === arrOfInputs[0]
+      });
 
-    //   if (allEqual && !arrOfInputs.includes(null)) {
-    //     console.log(arrOfInputs);
-    //     console.log('WIN VERTICAL')
-    //     return true;
-    //   }
-    // }
+      if (allEqual && !arrOfInputs.includes(null)) {
+        console.log(arrOfInputs);
+        console.log('WIN VERTICAL')
+        return true;
+      }
+    }
   }
 
   checkHorizontal() {
-    // for (let i = 0; i < 9; i = i + 3) {
-    //   const arrOfInputs = [];
-    //   arrOfInputs.push(this.plays[i], this.plays[i + 1], this.plays[i + 2]);
+    for (let i = 0; i < 9; i = i + 3) {
+      const arrOfInputs = [];
+      arrOfInputs.push(this.plays[i], this.plays[i + 1], this.plays[i + 2]);
 
-    //   const allEqual = arrOfInputs.every((v) => {
-    //     return v === arrOfInputs[0]
-    //   });
+      const allEqual = arrOfInputs.every((v) => {
+        return v === arrOfInputs[0]
+      });
 
-    //   if (allEqual && !arrOfInputs.includes(null)) {
-    //     console.log(arrOfInputs);
-    //     console.log('WIN HORIZONTAL')
-    //     return true;
-    //   }
-    // }
+      if (allEqual && !arrOfInputs.includes(null)) {
+        console.log(arrOfInputs);
+        console.log('WIN HORIZONTAL')
+        return true;
+      }
+    }
   }
 
   checkDiagonals() {
@@ -103,10 +107,11 @@ class TicTacToeGame {
   // }
 
   displayMessage() {
-    // let cells = document.getElementsByClassName("cell");
-    // for (let i = 0; i < cells.length; i++) {
-    //   cells[i].removeEventListener('click');
-    // }
+    let cells = document.getElementsByClassName("cell");
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].removeEventListener('click');
+    }
+    console.log('GAME OVER');
   }
 
   resetGame() {
