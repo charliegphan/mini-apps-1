@@ -7,11 +7,14 @@ class TicTacToeGame {
 
   init() {
     let cells = document.getElementsByClassName("cell");
-
     for (let i = 0; i < cells.length; i++) {
       cells[i].addEventListener('click', (e) => {
         this.markCell(i);
       })
+    }
+
+    for (let i = 0; i < 9; i++) {
+      this.plays.push(null);
     }
   }
 
@@ -21,19 +24,54 @@ class TicTacToeGame {
       return;
     }
     cell.innerHTML = this.currentPlayer;
+    this.placePiece(spot, this.currentPlayer);
     this.changeCurrentPlayer();
+    this.checkAndIncrementTurns();
+
+  }
+
+  placePiece(spot, currentPlayer) {
+    this.plays[spot] = currentPlayer;
+    console.log(this.plays);
   }
 
   changeCurrentPlayer() {
     if (this.currentPlayer === 'X') {
       this.currentPlayer = 'O';
+      document.getElementsByClassName('turn')[0].innerHTML = this.currentPlayer
     } else {
       this.currentPlayer = 'X';
+      document.getElementsByClassName('turn')[0].innerHTML = this.currentPlayer
     }
   }
 
-  checkRounds() {
-    console.log(this.turns);
+  checkAndIncrementTurns() {
+    if (this.turns === 8) {
+      this.turns++;
+      document.getElementsByClassName('plays')[0].innerHTML = this.turns
+      this.displayMessage();
+    } else {
+      this.turns++;
+      document.getElementsByClassName('plays')[0].innerHTML = this.turns
+    }
+  }
+
+  checkVertical() {
+    for (let i = 0; i < 3; i++) {
+
+    }
+  }
+
+  checkHorizontal() {
+
+  }
+
+  checkDiagonals() {
+
+  }
+
+  checkAll() {
+    return this.checkVertical && this.checkHorizontal && this.checkDiagonals;
   }
 
   displayMessage() {
