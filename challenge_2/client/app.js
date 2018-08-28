@@ -5,7 +5,8 @@ $(document).ready(() => {
 
     $.post('http://localhost:8080/posty',
       { text: submitText },
-      (res) => {
+      (res, status) => {
+        console.log(status);
         console.log(res);
       });
   });
