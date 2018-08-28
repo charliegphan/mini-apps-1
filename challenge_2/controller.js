@@ -1,23 +1,9 @@
 let fs = require('fs');
 let path = require('path');
 
-const arrToString = (arrayOfstrs) => {
-  let newStr = '';
-  for (let i = 0; i < arrayOfstrs.length; i++) {
-    if (i === arrayOfstrs.length - 1) {
-      newStr += arrayOfstrs[i];
-    }
-    else {
-      newStr += (arrayOfstrs[i] + ',');
-    }
-  }
-  return newStr;
-}
-
 const generateColumns = (obj) => {
   let columns = Object.keys(obj).slice(0, Object.keys(obj).length - 1);
-  let columnsStr = arrToString(columns);
-  return columnsStr;
+  return columns.join(',');
 }
 
 const processJSON = (json) => {
@@ -73,9 +59,5 @@ const writeFile = (json, cb) => {
 }
 
 module.exports = {
-  arrToString: arrToString,
-  generateColumns: generateColumns,
-  processJSON: processJSON,
-  generateLines: generateLines,
   writeFile: writeFile
 }
