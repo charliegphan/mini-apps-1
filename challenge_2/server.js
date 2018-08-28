@@ -75,7 +75,13 @@ app.post('/posty', (req, res) => {
   lines.unshift(generateColumns(json))
   console.log(lines);
 
-  // fs.writeFile(path.join())
+  lines.forEach((line) => {
+    fs.appendFile(path.join(__dirname, 'csv_files', 'csv_report.csv'), line + '\n', (err) => {
+      if (err) {
+        throw err;
+      }
+    })
+  })
 
 
 
