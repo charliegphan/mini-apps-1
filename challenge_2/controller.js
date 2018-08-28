@@ -55,7 +55,8 @@ const writeFile = (json, cb) => {
         }
       });
   });
-  cb(null);
+
+  cb(null, lines);
 }
 
 module.exports = {

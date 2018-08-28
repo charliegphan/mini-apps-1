@@ -5,9 +5,19 @@ $(document).ready(() => {
 
     $.post('http://localhost:8080/posty',
       { text: submitText },
-      (res, status) => {
-        console.log(status);
-        console.log(res);
+      (res) => {
+        addReport(JSON.parse(res));
       });
   });
 })
+
+addReport = (lines) => {
+  console.log(lines);
+  lines.forEach(line => {
+    let pNode = $('<p></p>');
+    pNode.text(line);
+    // console.log($('.report'));
+    $('.report').append(pNode);
+  })
+}
+

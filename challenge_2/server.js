@@ -13,8 +13,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/posty', (req, res) => {
-  controller.writeFile(JSON.parse(req.body.text), (err) => {
-    res.send('posty received')
+  controller.writeFile(JSON.parse(req.body.text), (err, lines) => {
+    res.send(JSON.stringify(lines))
   });
 })
 
