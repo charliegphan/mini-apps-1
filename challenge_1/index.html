@@ -6,16 +6,21 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="./styles/styles.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
 </head>
 
 <body>
-  <div class='name-input'>PLAYER X NAME: <input type="text"></div>
-  <div class='name-input'>PLAYER O NAME: <input type="text"></div>
+  <div>PLAYER X NAME: <input class='name-input-1' type="text"><button class='add-name-1'>SUBMIT</button></div>
+
+  <div>PLAYER O NAME: <input class='name-input-2' type="text"><button class='add-name-2'>SUBMIT</button></div>
 
   <div class="plays-made">PLAYS MADE: <span class='plays'>0</span></div>
   <div class="current-turn">CURRENT TURN: <span class='turn'>X</span></div>
-  <div class="wins"><span class="player-1">PLAYER X</span> WINS: <span class='X'>0</span></div>
-  <div class="wins"><span class="player-2">PLAYER O</span> WINS: <span class='O'>0</span></div>
+
+  <div class="wins"><span class="player-1">PLAYER X</span> - WINS: <span class='X'>0</span></div>
+
+  <div class="wins"><span class="player-2">PLAYER O</span> - WINS: <span class='O'>0</span></div>
 
   <button class='reset'>RESET GAME</button>
 

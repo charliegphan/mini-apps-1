@@ -1,7 +1,7 @@
 .current-turn {
   margin-left: 0.5%;
-  font-size: xx-large;
-  font-weight: 900;
+  font-size: x-large;
+  font-weight: 700;
   content: center;
 }
 
@@ -13,7 +13,7 @@
   height: 200px;
   width: 200px;
   background-color: #383838;
-  font-size: 1100%;
+  font-size: 800%;
   color: #1dcaff;
   border-radius: 50px;
   margin: 3px 3px 3px 3px;
@@ -29,24 +29,29 @@
   /* justify-content: space-around; */
 }
 
-
+.name-input {
+  float: right;
+  margin-left: 0.5%;
+  font-size: x-large;
+  font-weight: 700;
+  content: center;
+}
 
 .plays-made {
   margin-left: 0.5%;
-  font-size: xx-large;
-  font-weight: 900;
+  font-size: x-large;
+  font-weight: 700;
   content: center;
 }
+
 .winner {
   color: red;
 }
 
 .wins {
-  /* display: flex;
-  justify-content: space-around; */
   margin-left: 0.5%;
-  font-size: xx-large;
-  font-weight: 900;
+  font-size: x-large;
+  font-weight: 700;
   content: center;
 }
 

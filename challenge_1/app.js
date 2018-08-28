@@ -37,6 +37,24 @@ class TicTacToeGame {
       })
     }
 
+    let addNameButton1 = document.getElementsByClassName("add-name-1")[0];
+
+    addNameButton1.addEventListener('click', (e) => {
+      console.log('hit');
+      let name = document.getElementsByClassName('name-input-1')[0].value
+      document.getElementsByClassName('name-input-1')[0].value = '';
+      document.getElementsByClassName('player-1')[0].innerHTML = name.toUpperCase();
+    })
+
+    let addNameButton2 = document.getElementsByClassName("add-name-2")[0];
+    addNameButton2.addEventListener('click', (e) => {
+      console.log('hit');
+      let name = document.getElementsByClassName('name-input-2')[0].value
+      document.getElementsByClassName('name-input-2')[0].value = '';
+      console.log(typeof name);
+      document.getElementsByClassName('player-2')[0].innerHTML = name.toUpperCase();
+    })
+
     let reset = document.getElementsByClassName("reset")[0];
 
     reset.addEventListener('click', (e) => {
