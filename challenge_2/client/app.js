@@ -1,3 +1,10 @@
-let $ = require('jquery');
+$(document).ready(() => {
+  $('.button').on('click', (event) => {
+    let submitText = $('.text-area').val();
+    $('.text-area').val('');
 
-let textarea = document.getElementsByClassName('text-area');
+    $.post('http://localhost:8080/posty', submitText, (res) => {
+      console.log(res);
+    })
+  });
+})

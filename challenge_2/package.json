@@ -8,5 +8,8 @@
     "start": "node server.js"
   },
   "author": "Charlie Phan",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
 }
