@@ -14,7 +14,6 @@ class TicTacToeGame {
 
   init(firstPlayer = 'X') {
     console.log('GAME START');
-    console.log(this.lastWinner);
     this.currentPlayer = firstPlayer;
 
     this.populatePlays();
@@ -55,6 +54,8 @@ class TicTacToeGame {
   resetGameInfo(firstPlayer = 'X') {
     this.turns = 0;
     this.currentPlayer = firstPlayer;
+    document.getElementsByClassName('player-1')[0].classList.remove('winner');
+    document.getElementsByClassName('player-2')[0].classList.remove('winner');
     document.getElementsByClassName('plays')[0].innerHTML = '0';
     document.getElementsByClassName('turn')[0].innerHTML = firstPlayer;
     this.populatePlays();
@@ -93,6 +94,10 @@ class TicTacToeGame {
   setScore(winner) {
     this[winner]++;
     document.getElementsByClassName(this.lastWinner)[0].innerHTML = this[winner];
+    console.log(winner);
+
+    let highlight = winner === 'X' ? 'player-1' : 'player-2'
+    document.getElementsByClassName(highlight)[0].classList.add("winner");
   }
 
   checkVertical() {
@@ -161,8 +166,6 @@ class TicTacToeGame {
     if (rightEqual && !rightDown.includes(null)) {
       this.lastWinner = rightDown[0]
       this.setScore(this.lastWinner);
-      // this[this.lastWinner]++;
-      // document.getElementsByClassName(this.lastWinner)[0].innerHTML = this[this.lastWinner];
       console.log('WIN RIGHT DOWN');
       return true;
     }
@@ -175,15 +178,6 @@ class TicTacToeGame {
   displayMessage() {
     console.log('GAME OVER');
   }
-
-  // REMOVE LISTENERS FOR WHEN GAME IS OVER
-  // removeListeners() {
-  //   let cells = document.getElementsByClassName("cell");
-  //   for (let i = 0; i < cells.length; i++) {
-  //     cells[i].removeEventListener('click');
-  //   }
-  //   console.log('GAME OVER');
-  // }
 }
 
 const myGame = new TicTacToeGame();

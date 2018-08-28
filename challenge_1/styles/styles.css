@@ -1,12 +1,13 @@
-.grid {
-  display: flex;                  
-  flex-wrap: wrap;                 
-  /* justify-content: space-around; */
+.current-turn {
+  margin-left: 0.5%;
+  font-size: xx-large;
+  font-weight: 900;
+  content: center;
 }
 
 .cell {
   display: flex;
-  flex-basis: 31%;
+  flex-basis: 32.5%;
   justify-content: space-around;
   border: 1px solid black;
   height: 200px;
@@ -15,8 +16,20 @@
   font-size: 1100%;
   color: #1dcaff;
   border-radius: 50px;
-  margin: 15px 15px 15px 15px;
+  margin: 3px 3px 3px 3px;
 }
+
+.cell:hover { 
+  filter: brightness(115%);
+}
+
+.grid {
+  display: flex;                  
+  flex-wrap: wrap;                 
+  /* justify-content: space-around; */
+}
+
+
 
 .plays-made {
   margin-left: 0.5%;
@@ -24,42 +37,17 @@
   font-weight: 900;
   content: center;
 }
-
-.current-turn {
-  margin-left: 0.5%;
-  font-size: xx-large;
-  font-weight: 900;
-  content: center;
+.winner {
+  color: red;
 }
 
 .wins {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-around; */
   margin-left: 0.5%;
   font-size: xx-large;
   font-weight: 900;
   content: center;
 }
-
-.cell:hover { 
-  filter: brightness(115%);
-}
-
-.top-left-corner {
-  border-top-left-radius:50px;
-};
-
-.top-right-corner {
-  border-top-right-radius:40px;
-};
-
-.bottom-right-corner {
-  border-bottom-right-radius: 50px;
-};
-
-.bottom-left-corner {
-  border-bottom-left-radius: 25px;
-}
-
 
 
