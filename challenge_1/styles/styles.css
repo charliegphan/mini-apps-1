@@ -6,14 +6,60 @@
 
 .cell {
   display: flex;
+  flex-basis: 31%;
   justify-content: space-around;
   border: 1px solid black;
-  flex: 0 0 32%;
-  height: 80px;
+  height: 200px;
   width: 200px;
-  background-color: lightblue;
+  background-color: #383838;
+  font-size: 1100%;
+  color: #1dcaff;
+  border-radius: 50px;
+  margin: 15px 15px 15px 15px;
+}
+
+.plays-made {
+  margin-left: 0.5%;
+  font-size: xx-large;
+  font-weight: 900;
+  content: center;
+}
+
+.current-turn {
+  margin-left: 0.5%;
+  font-size: xx-large;
+  font-weight: 900;
+  content: center;
+}
+
+.wins {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 0.5%;
+  font-size: xx-large;
+  font-weight: 900;
+  content: center;
 }
 
 .cell:hover { 
   filter: brightness(115%);
 }
+
+.top-left-corner {
+  border-top-left-radius:50px;
+};
+
+.top-right-corner {
+  border-top-right-radius:40px;
+};
+
+.bottom-right-corner {
+  border-bottom-right-radius: 50px;
+};
+
+.bottom-left-corner {
+  border-bottom-left-radius: 25px;
+}
+
+
+
