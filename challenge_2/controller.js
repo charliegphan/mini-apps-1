@@ -50,19 +50,26 @@ const generateLines = (obj) => {
 
 const writeFile = (json, cb) => {
   let objArray = processJSON(json);
+
   const lines = objArray.map(obj => {
     return generateLines(obj);
   });
+
   lines.unshift(generateColumns(json))
+
+  var row = 0;
   lines.forEach((line) => {
-    fs.appendFile(path.join(__dirname, 'csv_files', 'csv_report.csv'), line + '\n', (err) => {
-      if (err) {
-        throw err;
-      } else {
-        cb(null);
-      }
-    });
+    row++;
+    fs.appendFileSync(path.join(__dirname, 'csv_files', 'csv_report.csv'),
+      row + ' ' + line + '\n', 'utf8', (err) => {
+        if (err) {
+          throw err;
+        } else {
+          console.log('The "data to append" was appended to file!');
+        }
+      });
   });
+  cb(null);
 }
 
 module.exports = {
