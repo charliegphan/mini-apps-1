@@ -3,8 +3,10 @@ $(document).ready(() => {
     let submitText = $('.text-area').val();
     $('.text-area').val('');
 
-    $.post('http://localhost:8080/posty', submitText, (res) => {
-      console.log(res);
-    })
+    $.post('http://localhost:8080/posty',
+      { text: submitText },
+      (res) => {
+        console.log(res);
+      });
   });
 })
