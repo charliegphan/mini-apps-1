@@ -27,7 +27,7 @@ class InfoForm extends React.Component {
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    // this.handlePasswordChange = this.handlePassWordChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
   handleNameChange(e) {
@@ -70,17 +70,23 @@ class InfoForm extends React.Component {
           <div>
             <label>
               Password
-            <input value={this.state.password} onChange={this.handlePasswordChange}></input>
+              <input value={this.state.password} onChange={this.handlePasswordChange}></input>
             </label>
           </div>
-
         </form>
       </div>
     )
   }
 }
 
+class ShippingForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
 
+    }
+  }
+}
 
 
 // const ShippingForm = () => {

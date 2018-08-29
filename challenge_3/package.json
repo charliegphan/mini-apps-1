@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js && babel client --out-dir public --presets=env,react --source-maps inline --watch"
+    "start": "nodemon server.js",
+    "dev": "babel client --out-dir public --presets=env,react --source-maps inline --watch"
   },
   "author": "",
   "license": "ISC",
