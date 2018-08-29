@@ -4,22 +4,31 @@ class App extends React.Component {
     this.state = {
       currentPage: 'home'
     }
+
+    this.handleNextPageClick = this.handleNextPageClick.bind(this);
   }
 
   handleNextPageClick(page) {
-    console.log('checkout');
+    console.log(page);
+
     this.setState({ currentPage: page });
   }
 
   render() {
     const pages = {
-      infoForm: <InfoForm handleNextPageClick={this.handleNextPageClick} />
-
+      infoForm: <InfoForm handleNextPageClick={this.handleNextPageClick} />,
+      shippingForm: <ShippingForm handleNextPageClick={this.handleNextPageClick} />,
+      billingForm: <BillingForm handleNextPageClick={this.handleNextPageClick} />
     }
 
     let page;
+
     if (this.state.currentPage === 'infoForm') {
       page = pages['infoForm']
+    } else if (this.state.currentPage === 'shippingForm') {
+      page = pages['shippingForm']
+    } else if (this.state.currentPage === 'billingForm') {
+      page = pages['billingForm']
     } else {
       page = <div></div>;
     }
@@ -52,20 +61,20 @@ class InfoForm extends React.Component {
 
   handleNameChange(e) {
     this.setState({ name: e.target.value }, () => {
-      console.log('name: ', this.state.name);
+      // console.log('name: ', this.state.name);
     });
 
   }
 
   handleEmailChange(e) {
     this.setState({ email: e.target.value }, () => {
-      console.log('email: ', this.state.email);
+      // console.log('email: ', this.state.email);
     });
   }
 
   handlePasswordChange(e) {
     this.setState({ password: e.target.value }, () => {
-      console.log('password: ', this.state.password);
+      // console.log('password: ', this.state.password);
     });
   }
 
@@ -206,7 +215,7 @@ class ShippingForm extends React.Component {
 
         </form>
 
-        <button onClick={this.handleNextClick}>Next</button>
+        <button onClick={() => { this.props.handleNextPageClick('billingForm') }}>Next Page</button>
       </div>
     )
   }
