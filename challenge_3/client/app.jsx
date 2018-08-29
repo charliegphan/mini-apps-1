@@ -18,32 +18,31 @@ class App extends React.Component {
     const pages = {
       infoForm: <InfoForm handleNextPageClick={this.handleNextPageClick} />,
       shippingForm: <ShippingForm handleNextPageClick={this.handleNextPageClick} />,
-      billingForm: <BillingForm handleNextPageClick={this.handleNextPageClick} />
+      billingForm: <BillingForm handleNextPageClick={this.handleNextPageClick} />,
+      summaryPage: <SummaryPage handleNextPageClick={this.handleNextPageClick} />
     }
 
-    let page;
+    let show;
 
     if (this.state.currentPage === 'infoForm') {
-      page = pages['infoForm']
+      show = pages['infoForm']
     } else if (this.state.currentPage === 'shippingForm') {
-      page = pages['shippingForm']
+      show = pages['shippingForm']
     } else if (this.state.currentPage === 'billingForm') {
-      page = pages['billingForm']
+      show = pages['billingForm']
+    } else if (this.state.currentPage === 'summaryPage') {
+      show = pages['summaryPage']
     } else {
-      page = <div></div>;
+      show = <button onClick={() => { this.handleNextPageClick('infoForm') }}>Checkout</button>
     }
 
     return (
       <div>
-        <button onClick={() => { this.handleNextPageClick('infoForm') }}>Checkout</button>
-        {page}
+        {show}
       </div>
     )
   }
 }
-// <ShippingForm />
-
-// <BillingForm />
 
 class InfoForm extends React.Component {
   constructor(props) {
@@ -292,36 +291,24 @@ class BillingForm extends React.Component {
           </label>
         </div>
 
-
+        <button onClick={() => { this.props.handleNextPageClick('summaryPage') }}>Next Page</button>
       </div>
     )
   }
 }
 
+const SummaryPage = ({ handleNextPageClick }) => {
+  return (
+    <div>
+      <h2>PURCHASE SUMMARY</h2>
+      <h3>Personal Information</h3>
+      <h3>Shipping Information</h3>
+      <h3>Billing Information</h3>
 
-
-
-
-
-
-
-
-// <div>
-// <label>
-//   TODOOOOOOO
-// <input value={} onChange={}></input>
-// </label>
-// </div>
-
-// const BillingForm = () => {
-//   return (<div>shipping form lol</div>)
-// }
-
-// const ConfirmationPage = () => {
-//   return (
-//     <div>ConfirmationPage</div>
-//   )
-// }
+      <button onClick={() => { handleNextPageClick('home') }}>Next Page</button>
+    </div>
+  )
+}
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
