@@ -10,8 +10,11 @@ class App extends React.Component {
 
   handleNextPageClick(page) {
     console.log(page);
-
     this.setState({ currentPage: page });
+  }
+
+  handleCheckoutClick(page, cb) {
+    // sub
   }
 
   render() {
