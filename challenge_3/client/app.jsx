@@ -10,12 +10,12 @@ class App extends React.Component {
     return (
       <div>
         <button>Checkout</button>
-        <ShippingForm />
+        <BillingForm />
       </div>
     )
   }
 }
-
+// <ShippingForm />
 // <InfoForm />
 
 class InfoForm extends React.Component {
@@ -190,6 +190,83 @@ class ShippingForm extends React.Component {
   }
 }
 
+class BillingForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      creditCard: '',
+      expDate: '',
+      CVV: '',
+      billingZipcode: ''
+    }
+
+    this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
+    this.handleExpDateChange = this.handleExpDateChange.bind(this);
+    this.handleCVVChange = this.handleCVVChange.bind(this);
+    this.handleBillingZipcodeChange = this.handleBillingZipcodeChange.bind(this);
+  }
+
+  handleCreditCardChange(e) {
+    this.setState({ creditCard: e.target.value }, () => {
+      console.log('credit card: ', this.state.creditCard);
+    });
+  }
+
+  handleExpDateChange(e) {
+    this.setState({ expDate: e.target.value }, () => {
+      console.log('expDate: ', this.state.expDate);
+    });
+  }
+
+  handleCVVChange(e) {
+    this.setState({ CVV: e.target.value }, () => {
+      console.log('CVV: ', this.state.CVV);
+    });
+  }
+
+  handleBillingZipcodeChange(e) {
+    this.setState({ billingZipcode: e.target.value }, () => {
+      console.log('billingZipCode: ', this.state.billingZipcode);
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <label>
+            Credit Card
+            <input value={this.state.creditCard} onChange={this.handleCreditCardChange}></input>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Exp Date
+            <input value={this.state.expDate} onChange={this.handleExpDateChange}></input>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            CVV
+            <input value={this.state.CVV} onChange={this.handleCVVChange}></input>
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Billing Zipcode
+            <input value={this.state.billingZipcode} onChange={this.handleBillingZipcodeChange}></input>
+          </label>
+        </div>
+
+
+      </div>
+    )
+  }
+}
+
 
 
 
@@ -204,11 +281,6 @@ class ShippingForm extends React.Component {
 // <input value={} onChange={}></input>
 // </label>
 // </div>
-
-
-// const ShippingForm = () => {
-//   return (<div>shipping form lol</div>)
-// }
 
 // const BillingForm = () => {
 //   return (<div>shipping form lol</div>)
