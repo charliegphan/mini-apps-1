@@ -6,17 +6,35 @@ class App extends React.Component {
     }
   }
 
+  handleNextPageClick(page) {
+    console.log('checkout');
+    this.setState({ currentPage: page });
+  }
+
   render() {
+    const pages = {
+      infoForm: <InfoForm handleNextPageClick={this.handleNextPageClick} />
+
+    }
+
+    let page;
+    if (this.state.currentPage === 'infoForm') {
+      page = pages['infoForm']
+    } else {
+      page = <div></div>;
+    }
+
     return (
       <div>
-        <button>Checkout</button>
-        <BillingForm />
+        <button onClick={() => { this.handleNextPageClick('infoForm') }}>Checkout</button>
+        {page}
       </div>
     )
   }
 }
 // <ShippingForm />
-// <InfoForm />
+
+// <BillingForm />
 
 class InfoForm extends React.Component {
   constructor(props) {
@@ -76,6 +94,8 @@ class InfoForm extends React.Component {
             </label>
           </div>
         </form>
+
+        <button onClick={() => { this.props.handleNextPageClick('shippingForm') }}>Next Page</button>
       </div>
     )
   }
@@ -185,6 +205,8 @@ class ShippingForm extends React.Component {
           </div>
 
         </form>
+
+        <button onClick={this.handleNextClick}>Next</button>
       </div>
     )
   }
