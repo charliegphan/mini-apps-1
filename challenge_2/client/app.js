@@ -11,12 +11,15 @@ $(document).ready(() => {
   });
 })
 
-addReport = (lines) => {
+const addReport = (lines) => {
   console.log(lines);
   lines.forEach(line => {
-    let pNode = $('<p></p>');
-    pNode.text(line);
-    // console.log($('.report'));
+    let paddedLine = line.padStart(21, ' ');
+    console.log(paddedLine);
+    let pNode = $('<p>' + paddedLine + '</p>').css({ 'white-space': 'pre' })
+
+
+    pNode.text(paddedLine);
     $('.report').append(pNode);
   })
 }

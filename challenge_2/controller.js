@@ -1,9 +1,14 @@
 let fs = require('fs');
 let path = require('path');
+let sprintf = require('sprintf-js').sprintf;
 
 const generateColumns = (obj) => {
   let columns = Object.keys(obj).slice(0, Object.keys(obj).length - 1);
-  return columns.join(',');
+  columns = columns.map(column => {
+    return column.padStart(21, ' ').toUpperCase();
+  });
+
+  return columns.join('');
 }
 
 const processJSON = (json) => {
@@ -25,10 +30,11 @@ const generateLines = (obj) => {
   let keys = Object.keys(obj);
   let line = '';
   for (let i = 0; i < keys.length - 1; i++) {
+    let val = obj[keys[i]].toString();
     if (i === keys.length - 2) {
-      line += obj[keys[i]];
+      line += val.padStart(21, ' ');
     } else {
-      line += (obj[keys[i]] + ',');
+      line += (val.padStart(21, ' '));
     }
   }
   return line;
@@ -59,6 +65,19 @@ const writeFile = (json, cb) => {
   cb(null, lines);
 }
 
+const readFile = (cb) => {
+  fs.readFile(path.join(__dirname, 'csv_files', 'csv_report.csv'),
+    'utf8', (err, data) => {
+      if (err) {
+        throw err;
+      }
+      const lines = data.split('\n');
+      cb(lines);
+    }
+  )
+}
+
 module.exports = {
-  writeFile: writeFile
+  writeFile: writeFile,
+  readFile: readFile
 }
