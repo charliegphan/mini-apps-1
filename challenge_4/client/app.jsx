@@ -20,6 +20,10 @@ class App extends React.Component {
     this.handlePiecePlacement = this.handlePiecePlacement.bind(this);
   }
 
+  checkForHorizontalWins() {
+
+  }
+
   handlePiecePlacement(spot) {
     const board = this.state.board;
     const currentPlayer = this.state.currentPlayer;
@@ -80,6 +84,7 @@ const Row = ({ row, spotInRow, placePiece }) => {
       {row.map((space, i) => {
         return (
           <Space
+            row={row}
             placePiece={placePiece}
             key={i}
             spot={{ row: spotInRow, column: i }} />
@@ -90,34 +95,47 @@ const Row = ({ row, spotInRow, placePiece }) => {
   )
 }
 
-const Space = ({ spot, placePiece }) => {
+const Space = ({ placePiece, spot, row }) => {
+  const occupancy = row[spot.column];
+  let color;
+
+  if (occupancy === 'RED') {
+    color = 'red';
+  } else if (occupancy === 'BLK') {
+    color = 'black';
+  } else {
+    color = 'white';
+  }
+
   return (
-    <div
+    <div style={
+      { background: color }
+    }
       className="space"
       onClick={() => { placePiece(spot) }}>
     </div>
   )
 }
 
-class Spot extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      turnedOn: false,
-      player: ''
-    }
-  }
+// class Spot extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       turnedOn: false,
+//       player: ''
+//     }
+//   }
 
-  render() {
+//   render() {
 
-    return (
-      <div
-        className="space"
-        onClick={() => { placePiece(spot) }}>
-      </div>
-    )
-  }
-}
+//     return (
+//       <div
+//         className="space"
+//         onClick={() => { placePiece(spot) }}>
+//       </div>
+//     )
+//   }
+// }
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
