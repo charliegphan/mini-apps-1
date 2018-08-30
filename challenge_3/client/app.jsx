@@ -3,7 +3,7 @@ class App extends React.Component {
     super(props)
     this.state = {
       currentPage: 'home',
-      id: ''
+      id: '',
     }
 
     this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
@@ -53,6 +53,8 @@ class App extends React.Component {
     } else {
       show = <button onClick={() => { this.handleCheckoutClick('infoForm') }}>Checkout</button>
     }
+
+    console.log(axios);
 
     return (
       <div>
@@ -116,28 +118,20 @@ class InfoForm extends React.Component {
   render() {
     return (
       <div>
-        <form>
-          <div>
-            <label>
-              Name
-              <input value={this.state.name} onChange={this.handleNameChange}></input>
-            </label>
-          </div>
+        <label>Name</label>
+        <div>
+          <input value={this.state.name} onChange={this.handleNameChange}></input>
+        </div>
 
-          <div>
-            <label>
-              Email
-              <input value={this.state.email} onChange={this.handleEmailChange}></input>
-            </label>
-          </div>
+        <label>Email</label>
+        <div>
+          <input value={this.state.email} onChange={this.handleEmailChange}></input>
+        </div>
 
-          <div>
-            <label>
-              Password
-              <input value={this.state.password} onChange={this.handlePasswordChange}></input>
-            </label>
-          </div>
-        </form>
+        <label>Password</label>
+        <div>
+          <input value={this.state.password} onChange={this.handlePasswordChange}></input>
+        </div>
 
         <button onClick={() => { this.handleNextClick('shippingForm') }}>Next Page</button>
       </div>
@@ -322,7 +316,9 @@ class BillingForm extends React.Component {
 
   handleNextClick(page) {
     console.log(this.props.id, 'FROM BILLING FORM');
+
     const data = {
+      id: this.props.id,
       creditCard: this.props.creditCard,
       expDate: this.state.expDate,
       CVV: this.state.CVV,
@@ -335,7 +331,7 @@ class BillingForm extends React.Component {
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify(data)
-    }).then(() => {
+    }).then((response) => {
       this.props.handleNextPageClick(page);
     })
   }
@@ -377,17 +373,45 @@ class BillingForm extends React.Component {
   }
 }
 
-const SummaryPage = ({ handleNextPageClick }) => {
-  return (
-    <div>
-      <h2>PURCHASE SUMMARY</h2>
-      <h3>Personal Information</h3>
-      <h3>Shipping Information</h3>
-      <h3>Billing Information</h3>
+class SummaryPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { confirmationInfo: {} };
+  }
 
-      <button onClick={() => { handleNextPageClick('home') }}>Next Page</button>
-    </div>
-  )
+  componentDidMount() {
+    fetch('http://localhost:3000/confirmation', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({ id: this.props.id })
+    }).then((response) => {
+      return response.json()
+    }).then(data => {
+      this.handleFetch(data);
+    })
+  }
+
+  handleFetch(data) {
+    console.log(data);
+    this.setState({ confirmationInfo: data }, () => {
+      console.log(this.state);
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>PURCHASE SUMMARY</h2>
+        <h3>Personal Information</h3>
+        <h3>Shipping Information</h3>
+        <h3>Billing Information</h3>
+
+        <button onClick={() => { this.props.handleNextPageClick('home') }}>Next Page</button>
+      </div>
+    )
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));

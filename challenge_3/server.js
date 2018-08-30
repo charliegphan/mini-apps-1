@@ -88,7 +88,18 @@ MongoClient.connect('mongodb://'
           }
           res.sendStatus(201);
         })
+
+
     });
+
+    app.post('/confirmation', (req, res) => {
+      console.log('req received');
+      let id = req.body.id;
+      purchases.findOne({ '_id': ObjectId(id) }, (err, result) => {
+        console.log(result);
+        res.send(result);
+      })
+    })
 
     app.listen(3000, () => {
       console.log('listening on port 3000 ^_^');
