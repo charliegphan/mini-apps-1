@@ -6,19 +6,50 @@ class App extends React.Component {
     super(props);
     this.state = {
       board: [
-        [null, null, null, null, null, null, null], // R OW
+        [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null]
       ],
-      currentPlayer: 'RED'
+      currentPlayer: 'RED',
+      active: true
     }
+
+    this.handlePiecePlacement = this.handlePiecePlacement.bind(this);
   }
 
   handlePiecePlacement(spot) {
+    const board = this.state.board;
+    const currentPlayer = this.state.currentPlayer;
+    const column = spot.column;
+    let row = 0;
 
+    const place = { column: column }
+
+    if (board[row + 1][column] === null) {
+      while (row < 5 && board[row + 1][column] === null) {
+        row++
+      }
+    }
+
+    if (board[row][column] === null) {
+      place.row = row;
+
+      const newBoard = this.state.board.map((row) => {
+        return row.slice();
+      })
+      newBoard[place.row][place.column] = this.state.currentPlayer;
+
+      let nextPlayer = currentPlayer === 'RED' ? 'BLK' : 'RED';
+      console.log(newBoard);
+
+      this.setState({
+        board: newBoard,
+        currentPlayer: nextPlayer
+      })
+    }
   }
 
   render() {
@@ -27,12 +58,13 @@ class App extends React.Component {
         <h1>connect4haha</h1>
         <h2>TURN: {this.state.currentPlayer}</h2>
 
-        {this.state.board.map((row, column) => {
+        {this.state.board.map((row, i) => {
           return (
             <Row
-              key={column}
-              row={column}
-              column={this.state.board[column]}
+              key={i}
+              spotInRow={i}
+              row={row}
+              placePiece={this.handlePiecePlacement}
             />
           )
 
@@ -42,24 +74,49 @@ class App extends React.Component {
   }
 }
 
-const Row = ({ column, row }) => {
+const Row = ({ row, spotInRow, placePiece }) => {
   return (
     <div className="row">
-      {column.map((space, i) => {
-        return <Space key={i} spot={{ row, i }} />
+      {row.map((space, i) => {
+        return (
+          <Space
+            placePiece={placePiece}
+            key={i}
+            spot={{ row: spotInRow, column: i }} />
+        )
       })
       }
     </div>
   )
 }
 
-const Space = ({ spot }) => {
+const Space = ({ spot, placePiece }) => {
   return (
     <div
       className="space"
-      onClick={() => { console.log(spot) }}>
+      onClick={() => { placePiece(spot) }}>
     </div>
   )
+}
+
+class Spot extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      turnedOn: false,
+      player: ''
+    }
+  }
+
+  render() {
+
+    return (
+      <div
+        className="space"
+        onClick={() => { placePiece(spot) }}>
+      </div>
+    )
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
