@@ -72,9 +72,23 @@ MongoClient.connect('mongodb://'
         })
     });
 
-    // app.post('/billingForm', (req, res) => {
-
-    // });
+    app.post('/billingForm', (req, res) => {
+      let id = req.body.id;
+      purchases.updateOne({ '_id': ObjectId(id) },
+        {
+          $set: {
+            creditCard: req.body.creditCard,
+            expDate: req.body.expDate,
+            CVV: req.body.CVV,
+            billingZipcode: req.body.billingZipcode,
+          }
+        }, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          res.sendStatus(201);
+        })
+    });
 
     app.listen(3000, () => {
       console.log('listening on port 3000 ^_^');

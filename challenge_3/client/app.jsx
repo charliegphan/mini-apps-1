@@ -169,13 +169,11 @@ class ShippingForm extends React.Component {
 
   handleAddress1Change(e) {
     this.setState({ address1: e.target.value }, () => {
-      // console.log(this.state.address1);
     });
   }
 
   handleAddress2Change(e) {
     this.setState({ address2: e.target.value }, () => {
-      // console.log(this.state.address2);
     });
   }
 
@@ -295,6 +293,7 @@ class BillingForm extends React.Component {
     this.handleExpDateChange = this.handleExpDateChange.bind(this);
     this.handleCVVChange = this.handleCVVChange.bind(this);
     this.handleBillingZipcodeChange = this.handleBillingZipcodeChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
 
   handleCreditCardChange(e) {
@@ -319,6 +318,26 @@ class BillingForm extends React.Component {
     this.setState({ billingZipcode: e.target.value }, () => {
       console.log('billingZipCode: ', this.state.billingZipcode);
     });
+  }
+
+  handleNextClick(page) {
+    console.log(this.props.id, 'FROM BILLING FORM');
+    const data = {
+      creditCard: this.props.creditCard,
+      expDate: this.state.expDate,
+      CVV: this.state.CVV,
+      billingZipCode: this.state.billingZipcode,
+    }
+
+    fetch('http://localhost:3000/billingForm', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      this.props.handleNextPageClick(page);
+    })
   }
 
   render() {
@@ -352,7 +371,7 @@ class BillingForm extends React.Component {
           </label>
         </div>
 
-        <button onClick={() => { this.props.handleNextPageClick('summaryPage') }}>Next Page</button>
+        <button onClick={() => { this.handleNextClick('summaryPage') }}>Next Page</button>
       </div>
     )
   }
