@@ -2,9 +2,11 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentPage: 'home'
+      currentPage: 'home',
+      id: ''
     }
 
+    this.handleCheckoutClick = this.handleCheckoutClick.bind(this);
     this.handleNextPageClick = this.handleNextPageClick.bind(this);
   }
 
@@ -13,16 +15,29 @@ class App extends React.Component {
     this.setState({ currentPage: page });
   }
 
-  handleCheckoutClick(page, cb) {
-    // sub
-  }
+  handleCheckoutClick(page) {
+    let data = { newRecord: 'son' };
+    fetch('http://localhost:3000/checkout', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    }).then((response) => {
+      this.handleNextPageClick(page);
+      return response.json();
+    }).then(data => {
+      console.log(data)
+      this.setState({ id: data })
+    })
+  };
 
   render() {
     const pages = {
-      infoForm: <InfoForm handleNextPageClick={this.handleNextPageClick} />,
-      shippingForm: <ShippingForm handleNextPageClick={this.handleNextPageClick} />,
-      billingForm: <BillingForm handleNextPageClick={this.handleNextPageClick} />,
-      summaryPage: <SummaryPage handleNextPageClick={this.handleNextPageClick} />
+      infoForm: <InfoForm id={this.state.id} handleNextPageClick={this.handleNextPageClick} />,
+      shippingForm: <ShippingForm id={this.state.id} handleNextPageClick={this.handleNextPageClick} />,
+      billingForm: <BillingForm id={this.state.id} handleNextPageClick={this.handleNextPageClick} />,
+      summaryPage: <SummaryPage id={this.state.id} handleNextPageClick={this.handleNextPageClick} />
     }
 
     let show;
@@ -36,7 +51,7 @@ class App extends React.Component {
     } else if (this.state.currentPage === 'summaryPage') {
       show = pages['summaryPage']
     } else {
-      show = <button onClick={() => { this.handleNextPageClick('infoForm') }}>Checkout</button>
+      show = <button onClick={() => { this.handleCheckoutClick('infoForm') }}>Checkout</button>
     }
 
     return (
@@ -59,25 +74,43 @@ class InfoForm extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
 
   handleNameChange(e) {
     this.setState({ name: e.target.value }, () => {
-      // console.log('name: ', this.state.name);
     });
 
   }
 
   handleEmailChange(e) {
     this.setState({ email: e.target.value }, () => {
-      // console.log('email: ', this.state.email);
     });
   }
 
   handlePasswordChange(e) {
     this.setState({ password: e.target.value }, () => {
-      // console.log('password: ', this.state.password);
     });
+  }
+
+  handleNextClick(page) {
+    console.log(this.props.id, 'FROM INFO FORM');
+    const data = {
+      id: this.props.id,
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
+    }
+
+    fetch('http://localhost:3000/infoForm', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      this.props.handleNextPageClick(page);
+    })
   }
 
   render() {
@@ -106,7 +139,7 @@ class InfoForm extends React.Component {
           </div>
         </form>
 
-        <button onClick={() => { this.props.handleNextPageClick('shippingForm') }}>Next Page</button>
+        <button onClick={() => { this.handleNextClick('shippingForm') }}>Next Page</button>
       </div>
     )
   }
