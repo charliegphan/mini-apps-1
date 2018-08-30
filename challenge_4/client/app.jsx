@@ -21,16 +21,29 @@ class App extends React.Component {
   }
 
   render() {
-    return (<div>APP</div>)
+    return (
+      <div>
+        {this.state.board.map((row, column) => {
+          return <Row key={column} column={this.state.board[column]} />
+        })}
+      </div>
+    )
   }
 }
 
-const Row = () => {
-
+const Row = ({ column }) => {
+  return (
+    <div className="row">
+      {column.map((space, i) => {
+        return <Space key={i} />
+      })
+      }
+    </div>
+  )
 }
 
 const Space = () => {
-  return (<div></div>)
+  return (<div className="space">SPACE</div>)
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
