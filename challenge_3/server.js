@@ -52,9 +52,25 @@ MongoClient.connect('mongodb://'
         })
     });
 
-    // app.post('/shippingForm', (req, res) => {
-
-    // });
+    app.post('/shippingForm', (req, res) => {
+      let id = req.body.id;
+      purchases.updateOne({ '_id': ObjectId(id) },
+        {
+          $set: {
+            address1: req.body.address1,
+            address2: req.body.address2,
+            city: req.body.city,
+            state: req.body.state,
+            zipcode: req.body.zipcode,
+            phone: req.body.phone
+          }
+        }, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          res.sendStatus(201);
+        })
+    });
 
     // app.post('/billingForm', (req, res) => {
 

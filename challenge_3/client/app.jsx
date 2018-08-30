@@ -164,6 +164,7 @@ class ShippingForm extends React.Component {
     this.handleStateChange = this.handleStateChange.bind(this);
     this.handleZipcodeChange = this.handleZipcodeChange.bind(this);
     this.handlePhoneChange = this.handlePhoneChange.bind(this);
+    this.handleNextClick = this.handleNextClick.bind(this);
   }
 
   handleAddress1Change(e) {
@@ -201,6 +202,30 @@ class ShippingForm extends React.Component {
       // console.log('phone: ', this.state.phone);
     });
   }
+
+  handleNextClick(page) {
+    console.log(this.props.id, 'FROM SHIPPING FORM');
+    const data = {
+      id: this.props.id,
+      address1: this.state.address1,
+      address2: this.state.address2,
+      city: this.state.city,
+      state: this.state.state,
+      zipcode: this.state.zipcode,
+      phone: this.state.phone
+    }
+
+    fetch('http://localhost:3000/shippingForm', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      this.props.handleNextPageClick(page);
+    })
+  }
+
 
   render() {
     return (
@@ -250,7 +275,7 @@ class ShippingForm extends React.Component {
 
         </form>
 
-        <button onClick={() => { this.props.handleNextPageClick('billingForm') }}>Next Page</button>
+        <button onClick={() => { this.handleNextClick('billingForm') }}>Next Page</button>
       </div>
     )
   }
