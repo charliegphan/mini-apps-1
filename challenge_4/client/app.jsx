@@ -43,7 +43,8 @@ const Row = ({ column }) => {
 }
 
 const Space = () => {
-  return (<div className="space">SPACE</div>)
+
+  return (<div className="space"></div>)
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
