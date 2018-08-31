@@ -67,9 +67,11 @@ class App extends React.Component {
 
     rightDiagonal.sort(comparator);
     leftDiagonal.sort(comparator);
+    console.log(leftDiagonal);
 
     const rightCheck = this.generateRow(rightDiagonal);
     const leftCheck = this.generateRow(leftDiagonal);
+    console.log(leftCheck);
 
     const rightStr = rightCheck.join('');
     const leftStr = leftCheck.join('');
@@ -80,7 +82,7 @@ class App extends React.Component {
       }, () => {
         console.log('WINNER: RIGHT DIAGONAL');
       })
-    } else if (leftStr.includes('REDREDREDRED') || rightStr.includes('BLKBLKBLKBLK')) {
+    } else if (leftStr.includes('REDREDREDRED') || leftStr.includes('BLKBLKBLKBLK')) {
       this.setState({
         active: false
       }, () => {
@@ -90,7 +92,6 @@ class App extends React.Component {
   }
 
   generateRow(arrOfSpotsOnBoard) {
-    console.log(arrOfSpotsOnBoard);
     return arrOfSpotsOnBoard.map((spot) => {
       return this.state.board[spot.row][spot.column];
     })
@@ -228,7 +229,7 @@ const Space = ({ placePiece, spot, row }) => {
   if (occupancy === 'RED') {
     color = 'red';
   } else if (occupancy === 'BLK') {
-    color = 'black';
+    color = '	#383838';
   } else {
     color = 'white';
   }
