@@ -1,11 +1,15 @@
 .app {
-  width: 650px;
+  width: 600px;
   margin: 25px auto 75px auto;
+  border: solid black 3px;
+  background-color: yellow;
+  border-radius: 10px;
 }
 
 .row {
   display: flex;
   flex-direction: row;
+  margin: 0px auto 0px auto;
 }
 
 .space {

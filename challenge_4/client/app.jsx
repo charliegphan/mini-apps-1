@@ -7,13 +7,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       board: [
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY']],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH'],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH'],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH'],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH'],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH'],
+        ['NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH', 'NAH']],
       currentPlayer: 'RED',
+      winner: null,
       active: true
     }
 
@@ -54,6 +55,15 @@ class App extends React.Component {
     }
   }
 
+  checkForDiagonalWins(row, column) {
+    // const RD = [];
+    // const LD = [];
+    // const generateRD = (row, column) {
+
+    // }
+    // const generateLD;
+  }
+
   handlePiecePlacement(spot) {
     if (this.state.active) {
       const board = this.state.board;
@@ -63,13 +73,13 @@ class App extends React.Component {
 
       const place = { column: column }
 
-      if (board[row + 1][column] === 'EMPTY') {
-        while (row < 5 && board[row + 1][column] === 'EMPTY') {
+      if (board[row + 1][column] === 'NAH') {
+        while (row < 5 && board[row + 1][column] === 'NAH') {
           row++
         }
       }
 
-      if (board[row][column] === 'EMPTY') {
+      if (board[row][column] === 'NAH') {
         place.row = row;
 
         const newBoard = this.state.board.map((row) => {
@@ -85,6 +95,7 @@ class App extends React.Component {
         }, () => {
           this.checkForHorizontalWins(place.row);
           this.checkForVerticalWins(place.column);
+          this.checkForDiagonalWins(place.row, place.column);
         })
       }
     }
