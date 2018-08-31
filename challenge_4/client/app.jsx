@@ -7,12 +7,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       board: [
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null]
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY']
       ],
       currentPlayer: 'RED',
       active: true
@@ -27,9 +27,15 @@ class App extends React.Component {
       return spot;
     });
 
+    let rowStr = rowToCheck.join('');
 
-
-    console.log(rowToCheck.join(''));
+    if (rowStr.includes('REDREDREDRED') || rowStr.includes('BLKBLKBLKBLK')) {
+      this.setState({
+        active: false
+      }, () => {
+        console.log('WINNER');
+      })
+    }
   }
 
   handlePiecePlacement(spot) {
@@ -41,13 +47,13 @@ class App extends React.Component {
 
       const place = { column: column }
 
-      if (board[row + 1][column] === null) {
-        while (row < 5 && board[row + 1][column] === null) {
+      if (board[row + 1][column] === 'EMPTY') {
+        while (row < 5 && board[row + 1][column] === 'EMPTY') {
           row++
         }
       }
 
-      if (board[row][column] === null) {
+      if (board[row][column] === 'EMPTY') {
         place.row = row;
 
         const newBoard = this.state.board.map((row) => {
