@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -21,6 +20,9 @@ class App extends React.Component {
     this.handlePiecePlacement = this.handlePiecePlacement.bind(this);
     this.checkForHorizontalWins = this.checkForHorizontalWins.bind(this);
     this.checkForVerticalWins = this.checkForVerticalWins.bind(this);
+    this.generateLeftDiagonal = this.generateLeftDiagonal.bind(this);
+    this.generateRightDiagonal = this.generateRightDiagonal.bind(this);
+    this.generateRow = this.generateRow.bind(this);
   }
 
   checkForHorizontalWins(row) {
@@ -34,7 +36,7 @@ class App extends React.Component {
       this.setState({
         active: false
       }, () => {
-        console.log('WINNER');
+        console.log('WINNER: HORIZONTAL');
       })
     }
   }
@@ -44,25 +46,104 @@ class App extends React.Component {
       return row[column]
     })
 
-    let columnStr = columnToCheck.join('');
+    const columnStr = columnToCheck.join('');
 
     if (columnStr.includes('REDREDREDRED') || columnStr.includes('BLKBLKBLKBLK')) {
       this.setState({
         active: false
       }, () => {
-        console.log('WINNER');
+        console.log('WINNER: VERTICAL');
       })
     }
   }
 
   checkForDiagonalWins(row, column) {
-    // const RD = [];
-    // const LD = [];
-    // const generateRD = (row, column) {
+    const rightDiagonal = this.generateRightDiagonal(row, column);
+    const leftDiagonal = this.generateLeftDiagonal(row, column);
 
-    // }
-    // const generateLD;
+    const comparator = (spot1, spot2) => {
+      return spot1.column - spot2.column;
+    }
+
+    rightDiagonal.sort(comparator);
+    leftDiagonal.sort(comparator);
+
+    const rightCheck = this.generateRow(rightDiagonal);
+    const leftCheck = this.generateRow(leftDiagonal);
+
+    const rightStr = rightCheck.join('');
+    const leftStr = leftCheck.join('');
+
+    if (rightStr.includes('REDREDREDRED') || rightStr.includes('BLKBLKBLKBLK')) {
+      this.setState({
+        active: false
+      }, () => {
+        console.log('WINNER: RIGHT DIAGONAL');
+      })
+    } else if (leftStr.includes('REDREDREDRED') || rightStr.includes('BLKBLKBLKBLK')) {
+      this.setState({
+        active: false
+      }, () => {
+        console.log('WINNER: LEFT DIAGONAL');
+      })
+    }
   }
+
+  generateRow(arrOfSpotsOnBoard) {
+    console.log(arrOfSpotsOnBoard);
+    return arrOfSpotsOnBoard.map((spot) => {
+      return this.state.board[spot.row][spot.column];
+    })
+  }
+
+  generateLeftDiagonal(row, column) {
+    const LD = [{ row, column }];
+    const top = [];
+    const bottom = [];
+
+    var topLDrow = row;
+    var topLDcolumn = column;
+    while (topLDrow > 0 && topLDcolumn > 0) {
+      topLDrow -= 1;
+      topLDcolumn -= 1;
+      top.push({ row: topLDrow, column: topLDcolumn });
+    }
+
+    var bottomLDrow = row;
+    var bottomLDcolumn = column;
+    while (bottomLDrow < 5 && bottomLDcolumn < 6) {
+      bottomLDrow += 1;
+      bottomLDcolumn += 1;
+      bottom.push({ row: bottomLDrow, column: bottomLDcolumn });
+    }
+    return LD.concat(top, bottom)
+  }
+
+  generateRightDiagonal(row, column) {
+    const RD = [{ row, column }];
+    const top = [];
+    const bottom = []
+
+    var topRDrow = row;
+    var topRDcolumn = column;
+    while (topRDrow > 0 && topRDcolumn < 6) {
+      topRDrow -= 1;
+      topRDcolumn += 1;
+      top.push({ row: topRDrow, column: topRDcolumn });
+    }
+
+    var bottomRDrow = row;
+    var bottomRDcolumn = column;
+    while (bottomRDrow < 5 && bottomRDcolumn > 0) {
+      bottomRDrow += 1;
+      bottomRDcolumn -= 1;
+      bottom.push({ row: bottomRDrow, column: bottomRDcolumn });
+    }
+
+    return RD.concat(top, bottom)
+  }
+
+
 
   handlePiecePlacement(spot) {
     if (this.state.active) {
