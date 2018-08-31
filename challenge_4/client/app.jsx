@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -18,49 +19,59 @@ class App extends React.Component {
     }
 
     this.handlePiecePlacement = this.handlePiecePlacement.bind(this);
+    this.checkForHorizontalWins = this.checkForHorizontalWins.bind(this);
   }
 
-  checkForHorizontalWins() {
+  checkForHorizontalWins(row) {
+    const rowToCheck = this.state.board[row].map((spot) => {
+      return spot;
+    });
 
+
+
+    console.log(rowToCheck.join(''));
   }
 
   handlePiecePlacement(spot) {
-    const board = this.state.board;
-    const currentPlayer = this.state.currentPlayer;
-    const column = spot.column;
-    let row = 0;
+    if (this.state.active) {
+      const board = this.state.board;
+      const currentPlayer = this.state.currentPlayer;
+      const column = spot.column;
+      let row = 0;
 
-    const place = { column: column }
+      const place = { column: column }
 
-    if (board[row + 1][column] === null) {
-      while (row < 5 && board[row + 1][column] === null) {
-        row++
+      if (board[row + 1][column] === null) {
+        while (row < 5 && board[row + 1][column] === null) {
+          row++
+        }
       }
-    }
 
-    if (board[row][column] === null) {
-      place.row = row;
+      if (board[row][column] === null) {
+        place.row = row;
 
-      const newBoard = this.state.board.map((row) => {
-        return row.slice();
-      })
-      newBoard[place.row][place.column] = this.state.currentPlayer;
+        const newBoard = this.state.board.map((row) => {
+          return row.slice();
+        })
+        newBoard[place.row][place.column] = this.state.currentPlayer;
 
-      let nextPlayer = currentPlayer === 'RED' ? 'BLK' : 'RED';
-      console.log(newBoard);
+        let nextPlayer = currentPlayer === 'RED' ? 'BLK' : 'RED';
 
-      this.setState({
-        board: newBoard,
-        currentPlayer: nextPlayer
-      })
+        this.setState({
+          board: newBoard,
+          currentPlayer: nextPlayer
+        }, () => {
+          this.checkForHorizontalWins(place.row);
+        })
+      }
     }
   }
 
   render() {
     return (
       <div className="app">
-        <h1>connect4haha</h1>
-        <h2>TURN: {this.state.currentPlayer}</h2>
+        <h1 className="title">connect4haha</h1>
+        <h2 className="turn">TURN: {this.state.currentPlayer}</h2>
 
         {this.state.board.map((row, i) => {
           return (
@@ -116,26 +127,6 @@ const Space = ({ placePiece, spot, row }) => {
     </div>
   )
 }
-
-// class Spot extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       turnedOn: false,
-//       player: ''
-//     }
-//   }
-
-//   render() {
-
-//     return (
-//       <div
-//         className="space"
-//         onClick={() => { placePiece(spot) }}>
-//       </div>
-//     )
-//   }
-// }
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
