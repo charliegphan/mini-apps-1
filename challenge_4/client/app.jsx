@@ -12,14 +12,14 @@ class App extends React.Component {
         ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
         ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
         ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY'],
-        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY']
-      ],
+        ['EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY', 'EMPTY']],
       currentPlayer: 'RED',
       active: true
     }
 
     this.handlePiecePlacement = this.handlePiecePlacement.bind(this);
     this.checkForHorizontalWins = this.checkForHorizontalWins.bind(this);
+    this.checkForVerticalWins = this.checkForVerticalWins.bind(this);
   }
 
   checkForHorizontalWins(row) {
@@ -30,6 +30,22 @@ class App extends React.Component {
     let rowStr = rowToCheck.join('');
 
     if (rowStr.includes('REDREDREDRED') || rowStr.includes('BLKBLKBLKBLK')) {
+      this.setState({
+        active: false
+      }, () => {
+        console.log('WINNER');
+      })
+    }
+  }
+
+  checkForVerticalWins(column) {
+    const columnToCheck = this.state.board.map(row => {
+      return row[column]
+    })
+
+    let columnStr = columnToCheck.join('');
+
+    if (columnStr.includes('REDREDREDRED') || columnStr.includes('BLKBLKBLKBLK')) {
       this.setState({
         active: false
       }, () => {
@@ -68,6 +84,7 @@ class App extends React.Component {
           currentPlayer: nextPlayer
         }, () => {
           this.checkForHorizontalWins(place.row);
+          this.checkForVerticalWins(place.column);
         })
       }
     }
